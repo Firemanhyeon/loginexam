@@ -1,0 +1,18 @@
+### Register a new user
+POST http://localhost:8080/user/userreg
+Content-Type: application/json
+
+{
+  "username": "user2",
+  "password": "1234"
+}
+
+### Login request
+POST http://localhost:8080/user/login
+Content-Type: application/x-www-form-urlencoded
+
+username=user1&password=1234
+
+### userList request
+GET http://localhost:8080/user/userList
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyMjI2MjM1MSwiZXhwIjoxNzIyODY3MTUxfQ.BeNMqZUdya7ol_FPtgCXbDzKRsbkyirrQO3bpmg61wk
