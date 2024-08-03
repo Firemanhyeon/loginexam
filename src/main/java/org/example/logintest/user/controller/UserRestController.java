@@ -1,6 +1,7 @@
 package org.example.logintest.user.controller;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.example.logintest.jwt.util.JwtUtil;
 import org.example.logintest.user.domain.AuthResponse;
 import org.example.logintest.user.domain.User;
@@ -19,17 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserRestController {
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final JwtUtil jwtUtil;
+
+    private final UserService userService;
+
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        System.out.println("123");
         User user = userService.findByUserName(username);
         if(user==null){
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -40,7 +41,7 @@ public class UserRestController {
 
         String accessToken = jwtUtil.generateAccessToken(username);
         String refreshToken = jwtUtil.generateRefreshToken(username);
-
+        //토큰을 쿠키에 저장하는 로직 추가로 생성필요
         return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken));
     }
 
